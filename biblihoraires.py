@@ -20,7 +20,9 @@ lyon_1_pretty = BeautifulSoup(lyon1_html, html.parser)
 """
 
 soup = bs(lyon1_html, "lxml")
-hours_table = soup.table
-str(hours_table)
-print(type(hours_table))
-# hours_table_list = hours_table.split("<tr>")
+hours_table = soup.table.find_all("td")
+for hour in hours_table:
+    print(hour.text)
+
+#hours_mardi = hours_table.findNextSibling()
+#print(hours_mardi)
