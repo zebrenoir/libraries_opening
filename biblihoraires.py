@@ -3,26 +3,19 @@ import requests
 from bs4 import BeautifulSoup as bs
 
 url_libraries = "https://www.bm-lyon.fr/16-bibliotheques-et-un-bibliobus/"
-library_lyon1 = "bibliotheque-du-1er/"
+libraries_links = ["bibliotheque-du-1er/", "bibliotheque-du-2e/", "bibliotheque-du-4e-croix-rousse/", "bibliotheque-du-5e-saint-jean/", "bibliotheque-du-7e-jean-mace/", "mediatheque-de-vaise/"]
 
+for library in libraries_links:
+    html = urllib.request.urlopen(url_libraries + library).read()
+    soup = bs(html, "lxml")
+    table = soup.table
+    days = table.find_all("th")
+    hours = table.find_all("td")
 
-lyon1_html = urllib.request.urlopen(url_libraries + library_lyon1).read()
+    library_name = soup.h1.text
+    print("\n" + library_name + "\n")
 
-"""
-lyon2 = "voici une string je crois bien !!!!"
-lyon2_array = lyon2.split(" ")
-print(lyon2_array)
+    for i in range(7):
+        print(days[i].string + " : " + hours[i].string)
 
-# lyon1_html_array = lyon1_html.split('printemps')
-
-lyon_1_pretty = BeautifulSoup(lyon1_html, html.parser)
-
-"""
-
-soup = bs(lyon1_html, "lxml")
-hours_table = soup.table.find_all("td")
-for hour in hours_table:
-    print(hour.text)
-
-#hours_mardi = hours_table.findNextSibling()
-#print(hours_mardi)
+print("\n")
