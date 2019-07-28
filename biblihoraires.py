@@ -44,6 +44,7 @@ else:
 # dimanche = 6
 """
 
+
 for library in libraries_links:
     html = urllib.request.urlopen(url_libraries + library).read()
     soup = bs(html, "lxml")
