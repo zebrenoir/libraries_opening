@@ -21,6 +21,8 @@ for library in libraries_links:
 
 print("\n")
 
+test = "test de branches"
+
 """
 Add a way to show the current day opening hours in all libraries
 first by manual input, then by sytem datetime check
