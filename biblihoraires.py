@@ -16,9 +16,9 @@ for library in libraries_links:
     library_name = soup.h1.text
     print("\n" + library_name + "\n")
 
-    for i in range(len(libraries_links)):
-        print(days[i].string + " : " + hours[i].string)
-
+#    for i in range(len(days)):
+#        print(days[i].string + " : " + hours[i].string)
+    print(days[6].string + " : " + hours[6].string)
 print("\n")
 
 test = "test de branches"
