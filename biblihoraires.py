@@ -51,7 +51,7 @@ for library in libraries_links:
     table = soup.table
     days = table.find_all("th")
     hours = table.find_all("td")
-    holidays = soup.caption.text
+    holidays_raw = soup.caption.text
     library_name = soup.h1.text
     print("\n" + library_name + "\n")
 
@@ -60,9 +60,8 @@ for library in libraries_links:
 #        print(days[i].string + " : " + hours[i].string)
 
     print(days[current_day].string + " : " + hours[current_day].string)
-    print(holidays)
-for holiday in holidays:
-    print(holiday)
+    holidays = holidays_raw.split("FERMETURE ")
+    print("Attention VACANCES !\nLa bibliothèque sera fermée " + holidays[1])
 print("\n")
 
 """
