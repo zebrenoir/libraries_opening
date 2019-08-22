@@ -22,8 +22,8 @@ def generate_hours():
         # results += "{name}<br/> {day} : {hours} <br/> VACANCES {holidays}<br/>".format(**library)
         results += f"{library['name']}<br/> {library['day']} : {library['hours']} <br/> VACANCES {library['holidays']}<br/>"
     # return render_template("hours.html", libraries)
-
-    return results
+    trial = "Biblifoliiiiiiiiiiiii'z!!!!"
+    return render_template("hours.html", libraries=libraries)
 
 
 if __name__ == "__main__":

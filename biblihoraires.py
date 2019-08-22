@@ -6,14 +6,7 @@ from bs4 import BeautifulSoup as bs
 
 
 def get_hours():
-    """
-    Add a way to show either the current day opening hours in all libraries
-    either all days in all libraries
-    first by manual input, then by sytem datetime check
 
-    Check the holiday closing dates and show if a library is closed for holidays
-    Otherwise the hours will be wrong.
-    """
     url_libraries = "https://www.bm-lyon.fr/16-bibliotheques-et-un-bibliobus/"
     libraries_links = ["bibliotheque-du-1er/", "bibliotheque-du-2e/", "bibliotheque-du-4e-croix-rousse/",
                        "bibliotheque-du-5e-saint-jean/", "bibliotheque-du-7e-jean-mace/", "mediatheque-de-vaise/"]
@@ -43,6 +36,3 @@ def get_hours():
     # This prints all days in all libraries
     #    for i in range(len(days)):
     #        print(days[i].string + " : " + hours[i].string)
-
-
-
