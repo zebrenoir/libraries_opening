@@ -42,7 +42,7 @@
     {% for library in libraries %}
       <div class="libraries">
         <h3>{{ library["name"] }} : {{ library["hours"] }}</h3>
-        <p><em>Attention cela dit : les vacances d'été 2019 sont {{ library.holidays }}</em></p>
+        <p><em>Attention cela dit : les vacances d'été 2019 sont <!--{{ library.holidays }}--></em></p>
       </div>
     {% endfor %}
   </main>

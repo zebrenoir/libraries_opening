@@ -21,14 +21,22 @@ def get_hours():
         table = soup.table
         days = table.find_all("th")
         hours = table.find_all("td")
-        holidays_raw = soup.caption.text
         library_name = soup.h1.text
+        holidays_raw = soup.caption.string
+        """
+        if holidays_raw == "Horaires d'ouverture":
+            holidays = "No holidays"
+        else:
+            holidays = holidays_raw.split("FERMETURE ")[1]
+        
         print("\n" + library_name + "\n")
+        """
+# TODO: test if the holidays is present on the site, otherwise empty string for holidays
         lib = {
             'name': library_name,
             'day': days[current_day].string,
             'hours': hours[current_day].string,
-            'holidays': holidays_raw.split("FERMETURE ")[1]
+#            'holidays': holidays
         }
         libraries.append(lib)
 
