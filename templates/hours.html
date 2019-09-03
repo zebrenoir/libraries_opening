@@ -25,7 +25,16 @@
       font-size: 2em;
     }
 
+    a {
+      text-decoration: none;
+      font-weight: bold;
+      color: lightblue;
+    }
 
+    a:hover {
+      color: orange;
+      text-decoration: underline;
+    }
 
     h3 {
       color: #d35400
@@ -34,15 +43,19 @@
 
   </head>
 <body>
+
   <header>
     <h1>Quelle bibli est ouverte aujourd'hui ?</h1>
+    <h2>Bibliothèques municipales de Lyon</h2>
   </header>
+
   <main>
     <h2>Aujourd'hui {{ libraries[0].day.lower() }} :</h2>
     {% for library in libraries %}
       <div class="libraries">
         <h3>{{ library["name"] }} : {{ library["hours"] }}</h3>
-        <p><em>Attention cela dit : les vacances d'été 2019 sont <!--{{ library.holidays }}--></em></p>
+        <p><em>{{ library.info }}</em></p>
+        <p><a href="https://www.google.fr/maps/place/Biblioth%C3%A8que+1er+Arrondissement+-+Lyon/@45.77383,4.8207218,15z/data=!4m8!1m2!2m1!1sbiblioth%C3%A8que+lyon+1!3m4!1s0x47f4eafea092c5dd:0x4a8676a3142eb95e!8m2!3d45.7689964!4d4.8343676" title="Comment s'y rendre">S'y rendre</a></p>
       </div>
     {% endfor %}
   </main>

@@ -4,6 +4,11 @@ import urllib
 import datetime
 from bs4 import BeautifulSoup as bs
 
+"""
+TODO: Need to get the opening info of the whole week,
+    get everyday hours and put them in an object so I can use
+    what I want (even if for now I only use the current day)
+"""
 
 def get_hours():
 
@@ -22,13 +27,16 @@ def get_hours():
         days = table.find_all("th")
         hours = table.find_all("td")
         library_name = soup.h1.text
-        holidays_raw = soup.caption.string
+        info_raw = soup.caption.string
+        if info_raw == "Horaires d'ouverture":
+            info_raw = "No info"
+        print(info_raw)
         """
         if holidays_raw == "Horaires d'ouverture":
             holidays = "No holidays"
         else:
             holidays = holidays_raw.split("FERMETURE ")[1]
-        
+
         print("\n" + library_name + "\n")
         """
 # TODO: test if the holidays is present on the site, otherwise empty string for holidays
@@ -36,7 +44,7 @@ def get_hours():
             'name': library_name,
             'day': days[current_day].string,
             'hours': hours[current_day].string,
-#            'holidays': holidays
+            'info': info_raw
         }
         libraries.append(lib)
 
