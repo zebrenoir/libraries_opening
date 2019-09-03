@@ -16,7 +16,7 @@
     }
 
     .libraries {
-      margin-bottom: 70px;
+      margin-bottom: 90px;
     }
 
     h1 {
@@ -25,8 +25,12 @@
       font-size: 2em;
     }
 
+    h2 {
+      margin-bottom: 40px;
+    }
+
     a {
-      text-decoration: none;
+      text-decoration: underline;
       font-weight: bold;
       color: lightblue;
     }
@@ -45,8 +49,7 @@
 <body>
 
   <header>
-    <h1>Quelle bibli est ouverte aujourd'hui ?</h1>
-    <h2>Bibliothèques municipales de Lyon</h2>
+    <h1>Horaires des bibliothèques municipales de Lyon</h1>
   </header>
 
   <main>
@@ -54,8 +57,8 @@
     {% for library in libraries %}
       <div class="libraries">
         <h3>{{ library["name"] }} : {{ library["hours"] }}</h3>
-        <p><em>{{ library.info }}</em></p>
-        <p><a href="https://www.google.fr/maps/place/Biblioth%C3%A8que+1er+Arrondissement+-+Lyon/@45.77383,4.8207218,15z/data=!4m8!1m2!2m1!1sbiblioth%C3%A8que+lyon+1!3m4!1s0x47f4eafea092c5dd:0x4a8676a3142eb95e!8m2!3d45.7689964!4d4.8343676" title="Comment s'y rendre">S'y rendre</a></p>
+        <!--<p><em>{{ library.info }}</em></p>-->
+        <p><a href='{{ library["maps"] }}' title="Comment s'y rendre">S'y rendre</a> : {{ library["address"] }}</p>
       </div>
     {% endfor %}
   </main>

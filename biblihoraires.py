@@ -20,6 +20,19 @@ def get_hours():
 
     libraries = []
 
+
+    def clean_hours(hours_raw):
+        if hours_raw == "fermée":
+            cleaned_hours = False
+        else:
+            hours_raw = hours_raw.replace("h", "")
+            cleaned_hours = hours_raw.split(" à ")
+
+        if len(cleaned_hours) == 2:
+            cleaned_hours = cleaned_hours[0] + "h -> " + cleaned_hours[1] + "h"
+
+        return cleaned_hours
+
     for library in libraries_links:
         html = urllib.request.urlopen(url_libraries + library).read()
         soup = bs(html, "lxml")
@@ -28,23 +41,17 @@ def get_hours():
         hours = table.find_all("td")
         library_name = soup.h1.text
         info_raw = soup.caption.string
-        if info_raw == "Horaires d'ouverture":
-            info_raw = "No info"
+        address = soup.find("div", class_="bib_adresse").string
         print(info_raw)
-        """
-        if holidays_raw == "Horaires d'ouverture":
-            holidays = "No holidays"
-        else:
-            holidays = holidays_raw.split("FERMETURE ")[1]
 
-        print("\n" + library_name + "\n")
-        """
 # TODO: test if the holidays is present on the site, otherwise empty string for holidays
         lib = {
             'name': library_name,
             'day': days[current_day].string,
             'hours': hours[current_day].string,
-            'info': info_raw
+            'info': info_raw,
+            'address': address,
+            'maps' : "https://www.google.fr/maps/place/" + address
         }
         libraries.append(lib)
 
