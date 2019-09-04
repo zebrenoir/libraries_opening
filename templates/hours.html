@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700&display=swap" rel="stylesheet">
-  <title>Document</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}">
+  <title>Horaires bibli</title>
 
   <style media="screen">
     body {
@@ -43,7 +44,11 @@
     h3 {
       color: #d35400
     }
+
+    footer {
+    }
   </style>
+
 
   </head>
 <body>
@@ -58,9 +63,12 @@
       <div class="libraries">
         <h3>{{ library["name"] }} : {{ library["hours"] }}</h3>
         <!--<p><em>{{ library.info }}</em></p>-->
-        <p><a href='{{ library["maps"] }}' title="Comment s'y rendre">S'y rendre</a> : {{ library["address"] }}</p>
+        <p><a target="_blank" rel="noopener noreferrer" href='{{ library["maps"] }}' title="Comment s'y rendre">S'y rendre</a> : {{ library["address"] }}</p>
       </div>
     {% endfor %}
   </main>
+  <footer>
+    <p>2019 || contact : sofiane point daouzli at gmail point com</p>
+  </footer>
 </body>
 </html>

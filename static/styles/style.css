@@ -1,0 +1,39 @@
+body {
+  background-color: #2c3e50;
+  color: #fff;
+  font-family: 'Nunito', sans-serif;
+  text-align: center;
+}
+
+.libraries {
+  margin-bottom: 90px;
+}
+
+h1 {
+  color: #c0392b;
+  margin: 60px 0;
+  font-size: 2em;
+}
+
+h2 {
+  margin-bottom: 40px;
+}
+
+a {
+  text-decoration: underline;
+  font-weight: bold;
+  color: lightblue;
+}
+
+a:hover {
+  color: orange;
+  text-decoration: underline;
+}
+
+h3 {
+  color: #d35400
+}
+
+footer {
+
+}
