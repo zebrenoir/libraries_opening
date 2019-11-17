@@ -69,7 +69,91 @@ def handle_error(message):
     return resp.get_response()
 
 
-def data():
+def treat_intent(intent):
+    res = json.loads(call_api())
+    if res['current_day'] != 0 and res['current_day'] != 6:
+        days = [
+            'Lundi',
+            'Mardi',
+            'mercredi',
+            'jeudi',
+            'vendredi',
+            'samedi',
+            'dimanche'
+        ]
+        arr = intent.slots.arrondissement
+        today = days[res['current_day']]
+        if arr[0] == '2':
+            arr = 'deuxième'
+        elif arr[0] == '3':
+            arr = 'troisième'
+        elif arr[0] == '4':
+            arr = 'quatrième'
+        elif arr[0] == '5':
+            arr = 'cinquième'
+        elif arr[0] == '6':
+            arr = 'sixième'
+        elif arr[0] == '7':
+            arr = 'septième'
+        elif arr[0] == '8':
+            arr = 'huitième'
+        elif arr[0] == '9':
+            arr = 'neuvième'
+
+        state = intent.slots.etat
+        if state == 'ouvre' or state == 'ouvrira' or state == 'sera ouverte':
+            index = 0
+        elif state == 'ferme' or state == 'fermera' or state == 'sera fermée':
+            index = 1
+
+        if intent.slots.jour:
+            day = intent.slots.jour
+            text = f"La bibliothèque du {arr} arrondissement {state} à {res[arr]['horaires'][days.index(day)][index]} heures le jour suivant : {day}"
+        elif not intent.slots.jour or (intent.slots.jour == "aujourd'hui"):
+            text = f"La bibliothèque du {arr} arrondissement {state} à {res[arr]['horaires'][today][index]} aujourd'hui"
+    else:
+        text = "Toutes les bibliothèques municipales de Lyon sont fermées aujourd'hui."
+    return text
+
+
+def treat_intent_full(intent):
+    res = json.loads(call_api())
+    if res['current_day'] != 0 and res['current_day'] != 5:
+        days = [
+            'lundi',
+            'mardi',
+            'mercredi',
+            'jeudi',
+            'vendredi',
+            'samedi',
+            'dimanche'
+        ]
+        arr = intent.slots.arrondissement
+        today = days[res['current_day']]
+        if arr[0] == '2':
+            arr = 'deuxième'
+        elif arr[0] == '3':
+            arr = 'troisième'
+        elif arr[0] == '4':
+            arr = 'quatrième'
+        elif arr[0] == '5':
+            arr = 'cinquième'
+        elif arr[0] == '6':
+            arr = 'sixième'
+        elif arr[0] == '7':
+            arr = 'septième'
+        elif arr[0] == '8':
+            arr = 'huitième'
+        elif arr[0] == '9':
+            arr = 'neuvième'
+        text = f"La bibliothèque du {arr} arrondissement ouvre à {res[arr]['horaires']['mardi'][0]} heures et ferme à {res[arr]['horaires']['mardi'][1]} heures."
+    else:
+        text = "Toutes les bibliothèques municipales de Lyon sont fermées aujourd'hui."
+    return text
+
+
+def treat_address(intent):
+    res = json.loads(call_api())
     days = [
         'lundi',
         'mardi',
@@ -79,10 +163,9 @@ def data():
         'samedi',
         'dimanche'
     ]
-    return days
+    arr = intent.slots.arrondissement
 
-
-def format_arr(arr):
+    today = days[res['current_day']]
     if arr[0] == '2':
         arr = 'deuxième'
     elif arr[0] == '3':
@@ -99,68 +182,6 @@ def format_arr(arr):
         arr = 'huitième'
     elif arr[0] == '9':
         arr = 'neuvième'
-    return arr
-
-
-def index_state(state):
-    if state == 'ouvre' or state == 'ouvrira' or state == 'sera ouverte':
-        index = 0
-    elif state == 'ferme' or state == 'fermera' or state == 'sera fermée':
-        index = 1
-    return index
-
-
-def treat_horaire_today(intent):
-    res = json.loads(call_api())
-    today = res['current_day']
-    if today != 0 and today != 6:
-        days = data()
-        arr = format_arr(intent.slots.arrondissement)
-        state = intent.slots.etat
-        day = intent.slots.jour
-        today = days[today]
-        index = index_state(state)
-
-        text = f"La bibliothèque du {arr} arrondissement {state} à {res[arr]['horaires'][today][index]} heures aujourd'hui"
-    else:
-        days = data()
-        day = intent.slots.jour
-        text = "Toutes les bibliothèques municipales de Lyon sont fermées aujourd'hui. "
-    return text
-
-
-def treat_horaire_day(intent):
-    day = intent.slots.jour
-    if day != 'lundi' and day != 'dimanche':
-        res = json.loads(call_api())
-        days = data()
-        arr = format_arr(intent.slots.arrondissement)
-        state = intent.slots.etat
-        index = index_state(state)
-
-        text = f"La bibliothèque du {arr} arrondissement {state} à {res[arr]['horaires'][days[days.index(day)]][index]} heures le {day}"
-    else:
-        text = f"Toutes les bibliothèques municipales de Lyon sont fermées le {day}."
-
-    return text
-
-
-def treat_intent_full(intent):
-    res = json.loads(call_api())
-    if res['current_day'] != 0 and res['current_day'] != 5:
-        days = data()
-        arr = format_arr(intent.slots.arrondissement)
-        today = days[res['current_day']]
-        text = f"La bibliothèque du {arr} arrondissement ouvre à {res[arr]['horaires']['mardi'][0]} heures et ferme à {res[arr]['horaires']['mardi'][1]} heures."
-    else:
-        text = "Toutes les bibliothèques municipales de Lyon sont fermées aujourd'hui."
-    return text
-
-
-def treat_address(intent):
-    res = json.loads(call_api())
-    days = data()
-    arr = format_arr(intent.slots.arrondissement)
     address = res[arr]['address']
     text = f"La bibliothèque du {arr} arrondissement se trouve au {address}"
     return text
@@ -170,11 +191,8 @@ def get_hours(intent):
     resp = Responser()
     resp.set_card(title=intent.name)
     text = "Il me manque l'état et l'arrondissement."
-    if intent.slots.etat and intent.slots.arrondissement and (
-            not intent.slots.jour or intent.slots.jour == "aujourd'hui"):
-        text = treat_horaire_today(intent)
-    if intent.slots.etat and intent.slots.arrondissement and intent.slots.jour:
-        text = treat_horaire_day(intent)
+    if intent.slots.etat and intent.slots.arrondissement:
+        text = treat_intent(intent)
     resp.set_output_speech(text)
     return resp.get_response()
 
