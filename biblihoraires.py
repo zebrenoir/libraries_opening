@@ -42,7 +42,10 @@ def get_hours():
         library_name = soup.h1.text
         info_raw = soup.caption.string
         address = soup.find("div", class_="bib_adresse").string
-        print(info_raw)
+        try:
+            print(info_raw.encode('utf8'))
+        except:
+            pass
 
 # TODO: test if the holidays is present on the site, otherwise empty string for holidays
         lib = {
