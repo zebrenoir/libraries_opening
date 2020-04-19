@@ -1,4 +1,3 @@
-# This app references Lyon's libraries current day opening hours
+# Amazon Alexa skill (vocal app)
 
-This is an Open Source project
-
+[This Alexa skill](https://www.amazon.fr/product-reviews/B081QN7H76) helps you find useful information about public libraries in Lyon
